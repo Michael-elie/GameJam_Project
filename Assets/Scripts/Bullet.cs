@@ -11,21 +11,14 @@ public class Bullet : MonoBehaviour
     {
         GetComponent<Rigidbody>().velocity = transform.forward * BulletSpeed;
     }
-
     
-    void Update()
-    {
-        
-    }
-
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponentInParent<EnemyController>() != null)
+        if (collision.gameObject.GetComponentInParent<EnemyController>() != null )
         {
 
             collision.gameObject.GetComponentInParent<EnemyController>().Damage( PlayerController.playerDamage);
         }
-        Destroy(gameObject);
+        Destroy(gameObject,0.05f);
     }
 }
