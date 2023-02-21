@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem firefx;
     public AudioSource firesound;
     
-    public ParticleSystem destructionfx;
     public AudioSource destructionsound;
 
     [SerializeField] private float playerPV;
@@ -34,10 +33,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDestination;
     private EnemyController _enemyController;
 
-    private bool donutEnable = false;
-    private bool bananaEnable = false;
+    private bool donutEnable = true;
+    private bool bananaEnable = true;
     private bool sausaceEnable = true;
     private bool iceCreamEnable = true;
+    [SerializeField] private bool boostSpeed = false;
     
     
    
@@ -73,6 +73,12 @@ public class PlayerController : MonoBehaviour
           _animator.SetInteger("AnimationPar", 0);
       }
       
+      if (boostSpeed == false)
+        
+      {
+          gameObject.GetComponent<NavMeshAgent>().speed =  4f;
+      }
+
       
 
 
@@ -87,7 +93,8 @@ public class PlayerController : MonoBehaviour
       
       if (Input.GetKeyDown(KeyCode.Alpha2) && bananaEnable == true)
       {
-          SpeedUP();
+          boostSpeed = true;
+          StartCoroutine(SpeedUP());
           Debug.Log("speedup");
       }
       if (Input.GetKeyDown(KeyCode.Alpha3) && sausaceEnable == true)
@@ -101,6 +108,16 @@ public class PlayerController : MonoBehaviour
       }
       
       
+    }
+    IEnumerator SpeedUP()
+    {
+        if (boostSpeed == true)
+        {
+            gameObject.GetComponent<NavMeshAgent>().speed =  5f;
+            yield return new WaitForSeconds(3f);
+            boostSpeed = false;
+        }
+        bananaEnable = false;
     }
 
     private void Move()
@@ -129,7 +146,7 @@ public class PlayerController : MonoBehaviour
        //firefx.Play();
        //firesound.Play();
         Instantiate(BulletPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         IsAlreadyFiring = false;
     }
     
@@ -138,8 +155,12 @@ public class PlayerController : MonoBehaviour
 
         playerPV -= damage;
         if (playerPV <= 0)
-        {
+        { 
+          
+          //  _animator.SetInteger("AnimationPar", 2);
             Destruction();
+            _enemyController._animator.SetInteger("SlimAnimation",3);
+            
         }
 
     }
@@ -147,21 +168,16 @@ public class PlayerController : MonoBehaviour
     protected virtual void Destruction()
     {
         mainCamera.transform.SetParent(null);
-       // destructionfx.transform.SetParent(null);
+     
        //   destructionsound.Play();
        //   destructionfx.Play();
-        Destroy(gameObject);
-        _enemyController._animator.SetInteger("SlimAnimation",3 );
+       Destroy(gameObject,0f);
     }
 
     void  Health()
     {
         playerPV = playerPV + 20f;
-    }
-    
-    void  SpeedUP()
-    {
-        moveSpeed = moveSpeed + 4f;
+        donutEnable = false;
     }
     
     void Explosion()

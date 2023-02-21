@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemyData _enemyData;
     public float Pv = 100f;
     private NavMeshAgent enemy;
-    public GameObject Playertarget;
+    private GameObject Playertarget;
     public float knockBackvalue;
     private Vector3 knockBackdistance;
    // public SpawnEnemy SpawnEnemy;
@@ -23,7 +23,8 @@ public class EnemyController : MonoBehaviour
     {
         _enemyData.enemyPv = Pv;
         enemy = GetComponent<NavMeshAgent>();
-      
+        enemy.speed = _enemyData.enemySpeed;
+     Playertarget = GameObject.Find("PlayerAstro");
     }
 
 
@@ -51,7 +52,7 @@ public class EnemyController : MonoBehaviour
        // explosionfx.transform.SetParent(null);
       //  Explosionsound.Play();
       //  explosionfx.Play();
-      _animator.SetInteger("SlimAnimation",2);
+      _animator.SetInteger("enemyAnimation",2);
         Destroy(gameObject, 2f);
 
     }
@@ -60,7 +61,7 @@ public class EnemyController : MonoBehaviour
     {
         if( collision.gameObject.GetComponentInParent<PlayerController>() != null)
         {
-            _animator.SetInteger("SlimAnimation",1 );
+            _animator.SetInteger("enemyAnimation",1 );
             collision.gameObject.GetComponentInParent<PlayerController>().ApplyDamage(_enemyData.enemyDamage);
             Rigidbody rigidbody = collision.gameObject.GetComponent<Rigidbody>();
             if (rigidbody != null)
@@ -76,7 +77,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        _animator.SetInteger("SlimAnimation",0 );
+        _animator.SetInteger("enemyAnimation",0 );
     }
 
    
