@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
     void  Health()
     {
         abilitysound.Play();
-        playerPV = playerPV + 20f;
+        playerPV = playerPV + 25f;
         donutEnable = false;
         donutValue = 0;
         OnUpdateHealth?.Invoke();

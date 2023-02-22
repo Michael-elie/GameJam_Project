@@ -11,10 +11,14 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         _scene = SceneManager.GetActiveScene();
-        _animator.SetInteger("AnimationPar", 2);
-        if (_scene.name == "GameOver");
+        
+       /* if (_scene.name == "GameOver");
         {
             _animator.SetInteger("AnimationPar", 3);
+        }*/
+        if (_scene.name == "Game");
+        {
+            _animator.SetInteger("AnimationPar", 2);
         }
     }
 
