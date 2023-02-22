@@ -6,6 +6,7 @@ public class Timer : MonoBehaviour
    
     public float timeValue = 90f;
     [SerializeField] private TMP_Text TimerText;
+    public PlayerController PlayerController; 
     
     
     void Update()
@@ -23,8 +24,17 @@ public class Timer : MonoBehaviour
         }
 
         DisplayTime(timeValue);
-
+        if ( PlayerController.playerPV <= 0 )
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+        else if (timeValue <= 0 && PlayerController.playerPV >= 0 )
+        {
+            SceneManager.LoadScene("Win");
+        }
+        
     }
+    
 
     void DisplayTime(float timeToDisplay)
     {

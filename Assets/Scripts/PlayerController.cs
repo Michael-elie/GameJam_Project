@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -36,14 +35,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     private NavMeshAgent Agent;
     private Vector3 moveDestination;
-    private EnemyController _enemyController;
+    public EnemyController _enemyController;
 
     private bool donutEnable = false;
     private bool bananaEnable = false;
     private bool sausaceEnable = false;
-    private bool iceCreamEnable = true;
+    private bool iceCreamEnable = false; 
     [SerializeField] private bool boostSpeed = false;
 
+    public float donutValue = 0;
+    public float bananeValue = 0;
+    public float sausaceValue = 0;
+    public float iceCreamValue = 0;
+    
+    private float donutMaxValue = 4;
+    private float bananeMaxValue = 4; 
+    private float sausaceMaxValue = 4;
+    private float iceCreaMaxValue = 4;
+
+   public GameUI _gameUI; 
     
     public delegate void PlayerEvents();
 
@@ -59,6 +69,12 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue; 
+        _gameUI.icecreamBar.fillAmount = iceCreamValue / iceCreaMaxValue;
+        _gameUI.donutBar.fillAmount = donutValue / donutMaxValue;
+        _gameUI.saucisseBar.fillAmount = sausaceValue / sausaceMaxValue;
+        
+        
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
       Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
       float RayLength;
@@ -76,6 +92,24 @@ public class PlayerController : MonoBehaviour
           Fire();
       }
       Move();
+      
+      
+      if (donutValue == donutMaxValue)
+      {
+          donutEnable = true;
+      }
+      else if (sausaceValue == sausaceMaxValue)
+      {
+          sausaceEnable = true;
+      }
+      else if (bananeValue == bananeMaxValue)
+      {
+          bananaEnable = true;
+      }
+      else if (iceCreamValue == iceCreaMaxValue)
+      {
+          iceCreamEnable = true;
+      }
 
       if ( moveDestination == transform.position )
       {
@@ -112,7 +146,6 @@ public class PlayerController : MonoBehaviour
           FreezeEnemy();
       }
       
-      
     }
     IEnumerator SpeedUP()
     {
@@ -122,19 +155,18 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<NavMeshAgent>().speed =   gameObject.GetComponent<NavMeshAgent>().speed + 1f;
             yield return new WaitForSeconds(3f);
             boostSpeed = false;
+            bananeValue = 0;
         }
         bananaEnable = false;
+        _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue; 
     }
-
     private void Move()
     {
-        
         _animator.SetInteger("AnimationPar", 1);
         float horInput = Input.GetAxisRaw("Horizontal");
         float verInput = Input.GetAxisRaw("Vertical");
         Vector3 movement = new Vector3(horInput, 0f, verInput);
         moveDestination = transform.position + movement;
-        Debug.Log(moveDestination);
         Agent.SetDestination(moveDestination);
     }
     
@@ -143,7 +175,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsAlreadyFiring)
         {
-           
             IsAlreadyFiring = true;
             StartCoroutine(fireDelay());
         }
@@ -156,24 +187,20 @@ public class PlayerController : MonoBehaviour
         Instantiate(BulletPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         yield return new WaitForSeconds(0.25f);
         IsAlreadyFiring = false;
-    }
+    } 
     
     public void ApplyDamage(float damage)
     {
         damagesound.Play();
         playerPV -= damage;
+        OnUpdateHealth?.Invoke();
         if (playerPV <= 0)
         { 
-          
+            _enemyController._animator.SetInteger("SlimAnimation",3);
           //  _animator.SetInteger("AnimationPar", 2);
             Destruction();
-            _enemyController._animator.SetInteger("SlimAnimation",3);
-            
         }
-        OnUpdateHealth?.Invoke();
-
     }
-    
     protected virtual void Destruction()
     {
         mainCamera.transform.SetParent(null);
@@ -187,7 +214,9 @@ public class PlayerController : MonoBehaviour
         abilitysound.Play();
         playerPV = playerPV + 20f;
         donutEnable = false;
+        donutValue = 0;
         OnUpdateHealth?.Invoke();
+        _gameUI.donutBar.fillAmount = donutValue / donutMaxValue;
     }
     
     void Explosion()
@@ -195,12 +224,40 @@ public class PlayerController : MonoBehaviour
         explosionsound.Play();
         Instantiate(BulletExplosionPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         sausaceEnable = false;
+        sausaceValue = 0;
+        _gameUI.saucisseBar.fillAmount = sausaceValue / sausaceMaxValue;
     }
-    
     void FreezeEnemy()
     {
         abilitysound.Play();
         Instantiate(BulletFreezePrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         iceCreamEnable = false;
+        iceCreamValue = 0;
+        _gameUI.icecreamBar.fillAmount = iceCreamValue / iceCreaMaxValue;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("banane"))
+        {
+            bananeValue = bananeValue + 1; 
+            _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue; 
+
+        }
+        else if (other.gameObject.CompareTag("icecream"))
+        {
+            iceCreamValue = iceCreamValue + 1;
+            _gameUI.icecreamBar.fillAmount = iceCreamValue / iceCreaMaxValue;
+        }  
+        else if (other.gameObject.CompareTag("donut"))
+        {
+            donutValue = donutValue + 1;
+            _gameUI.donutBar.fillAmount = donutValue / donutMaxValue;
+        }  
+        else if (other.gameObject.CompareTag("saucisse"))
+        {
+            sausaceValue = sausaceValue + 1;
+            _gameUI.saucisseBar.fillAmount = sausaceValue / sausaceMaxValue;
+        }  
     }
 }

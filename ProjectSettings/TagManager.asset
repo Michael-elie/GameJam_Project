@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - FxTemporaire
+  - banane
+  - donut
+  - saucisse
+  - icecream
   layers:
   - Default
   - TransparentFX

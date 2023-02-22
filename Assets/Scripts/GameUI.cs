@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
-    [SerializeField] private Image _HealthBar;
-    private PlayerController _playerController; 
+    public Image _HealthBar;
+    public Image donutBar;
+    public Image bananeBar;
+    public Image icecreamBar;
+    public Image saucisseBar;
+    public PlayerController _playerController; 
    
     void Start()
     {
@@ -15,7 +19,7 @@ public class GameUI : MonoBehaviour
     
     public void Update()
     {
-       UpdateHealthBar();
+       //UpdateHealthBar();
     }
 
     private void OnEnable()
@@ -29,6 +33,7 @@ public class GameUI : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-       // _HealthBar.fillAmount = _playerController.playerPV / _playerController.maxPlayerPV ;
+        
+        _HealthBar.fillAmount = _playerController.playerPV / _playerController.maxPlayerPV ;
     }
 }

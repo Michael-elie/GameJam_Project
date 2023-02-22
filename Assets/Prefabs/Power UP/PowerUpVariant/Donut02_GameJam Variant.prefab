@@ -67,6 +67,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Donut02_GameJam Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dd3f63813b0e0094c8ab53f8ba455909, type: 3}
+      propertyPath: m_TagString
+      value: donut
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd3f63813b0e0094c8ab53f8ba455909, type: 3}
 --- !u!1 &4061980090923815523 stripped

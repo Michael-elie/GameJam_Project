@@ -7,7 +7,7 @@ public class BulletExplosion : MonoBehaviour
 {
     [SerializeField] private float BulletSpeed = 10f;
     public PlayerController PlayerController;
-    public GameObject explosionfx;
+   // public GameObject explosionfx;
     public float explosionForce, radius;
 
     void Start()
