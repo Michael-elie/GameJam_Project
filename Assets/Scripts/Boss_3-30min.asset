@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc075abed19a4af4899d3d18aff2c7d3, type: 3}
   m_Name: Boss_3-30min
   m_EditorClassIdentifier: 
-  enemyPv: 75
-  enemySpeed: 3.5
+  enemyPv: 100
+  enemySpeed: 3.9
   enemyDamage: 25

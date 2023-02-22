@@ -9,6 +9,7 @@ public class BulletFreeze : MonoBehaviour
     [SerializeField] private float BulletSpeed = 10f;
     public GameObject Freeezefx;
     public float FreezeForce, radius;
+    private Vector3 fxposition;
     void Start()
     {
         GetComponent<Rigidbody>().velocity = transform.forward * BulletSpeed;
@@ -19,7 +20,9 @@ public class BulletFreeze : MonoBehaviour
         if (collision.gameObject.GetComponentInParent<EnemyController>() != null )
         {
             KnockBack();
-            collision.gameObject.GetComponent<NavMeshAgent>().speed = 1.5f;
+            collision.gameObject.GetComponent<NavMeshAgent>().speed = 0.1f;
+            fxposition = collision.gameObject.transform.position;
+            Instantiate(Freeezefx, fxposition, Quaternion.identity);
         }
         Destroy(gameObject);
     }
@@ -30,6 +33,7 @@ public class BulletFreeze : MonoBehaviour
 
         foreach (Collider nearby in colliders)
         {
+          
             Rigidbody rigidbody = nearby.GetComponent<Rigidbody>();
             if (rigidbody != null)
             {

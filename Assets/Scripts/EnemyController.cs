@@ -7,10 +7,10 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public ParticleSystem explosionfx;
-    public AudioSource Explosionsound;
+    public ParticleSystem deathfx;
+    public AudioSource deathsound;
     [SerializeField] private EnemyData _enemyData;
-    public float Pv = 100f;
+    private float Pv ;
     private NavMeshAgent enemy;
     private GameObject Playertarget;
     public float knockBackvalue;
@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-        _enemyData.enemyPv = Pv;
+         Pv =  _enemyData.enemyPv;
         enemy = GetComponent<NavMeshAgent>();
         enemy.speed = _enemyData.enemySpeed;
      Playertarget = GameObject.Find("PlayerAstro");
@@ -49,11 +49,13 @@ public class EnemyController : MonoBehaviour
     protected virtual void Destruction()
     {
 
-       // explosionfx.transform.SetParent(null);
-      //  Explosionsound.Play();
-      //  explosionfx.Play();
+        deathfx.transform.SetParent(null);
+       // deathsound.Play();
+       
+      enemy.speed = 0f;
       _animator.SetInteger("enemyAnimation",2);
-        Destroy(gameObject, 2f);
+      deathfx.Play();
+      Destroy(gameObject, 2f);
 
     }
 
@@ -63,6 +65,7 @@ public class EnemyController : MonoBehaviour
         {
             _animator.SetInteger("enemyAnimation",1 );
             collision.gameObject.GetComponentInParent<PlayerController>().ApplyDamage(_enemyData.enemyDamage);
+            
             Rigidbody rigidbody = collision.gameObject.GetComponent<Rigidbody>();
             if (rigidbody != null)
             {

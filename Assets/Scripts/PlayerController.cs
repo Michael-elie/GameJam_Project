@@ -15,12 +15,16 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera; 
     
     private bool IsAlreadyFiring = false;
-    public ParticleSystem firefx;
+    public ParticleSystem healthfx;
+    public ParticleSystem Speedfx;
     public AudioSource firesound;
-    
-    public AudioSource destructionsound;
+    public AudioSource abilitysound;
+    public AudioSource deathsound;
+    public AudioSource explosionsound;
+    public AudioSource damagesound;
 
-    [SerializeField] private float playerPV;
+    public float playerPV;
+    public float maxPlayerPV = 100f;
     public float moveSpeed = 2.5f;
     public float playerDamage; 
     
@@ -33,13 +37,17 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDestination;
     private EnemyController _enemyController;
 
-    private bool donutEnable = true;
-    private bool bananaEnable = true;
-    private bool sausaceEnable = true;
-    private bool iceCreamEnable = true;
+    private bool donutEnable = false;
+    private bool bananaEnable = false;
+    private bool sausaceEnable = false;
+    private bool iceCreamEnable = false;
     [SerializeField] private bool boostSpeed = false;
+
     
-    
+    public delegate void PlayerEvents();
+
+    public static event PlayerEvents OnUpdateHealth;
+
    
     void Start()
     {
@@ -47,6 +55,7 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
         
+        OnUpdateHealth?.Invoke();
     }
     void Update()
     {
@@ -87,15 +96,16 @@ public class PlayerController : MonoBehaviour
 
       if (Input.GetKeyDown(KeyCode.Alpha1) && donutEnable == true )
       {
+         healthfx.Play();
           Health();
-          
       }
       
       if (Input.GetKeyDown(KeyCode.Alpha2) && bananaEnable == true)
-      {
+      { 
+          Speedfx.Play();
           boostSpeed = true;
           StartCoroutine(SpeedUP());
-          Debug.Log("speedup");
+         
       }
       if (Input.GetKeyDown(KeyCode.Alpha3) && sausaceEnable == true)
       {
@@ -113,7 +123,8 @@ public class PlayerController : MonoBehaviour
     {
         if (boostSpeed == true)
         {
-            gameObject.GetComponent<NavMeshAgent>().speed =  5f;
+            abilitysound.Play();
+            gameObject.GetComponent<NavMeshAgent>().speed =   gameObject.GetComponent<NavMeshAgent>().speed + 1f;
             yield return new WaitForSeconds(3f);
             boostSpeed = false;
         }
@@ -136,6 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsAlreadyFiring)
         {
+           
             IsAlreadyFiring = true;
             StartCoroutine(fireDelay());
         }
@@ -143,16 +155,16 @@ public class PlayerController : MonoBehaviour
     IEnumerator fireDelay()
     
     {   
-       //firefx.Play();
-       //firesound.Play();
+       
+       firesound.Play();
         Instantiate(BulletPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
         IsAlreadyFiring = false;
     }
     
     public void ApplyDamage(float damage)
     {
-
+        damagesound.Play();
         playerPV -= damage;
         if (playerPV <= 0)
         { 
@@ -162,6 +174,7 @@ public class PlayerController : MonoBehaviour
             _enemyController._animator.SetInteger("SlimAnimation",3);
             
         }
+        OnUpdateHealth?.Invoke();
 
     }
     
@@ -169,25 +182,28 @@ public class PlayerController : MonoBehaviour
     {
         mainCamera.transform.SetParent(null);
      
-       //   destructionsound.Play();
-       //   destructionfx.Play();
+       //  deathsound.Play();
        Destroy(gameObject,0f);
     }
 
     void  Health()
     {
+        abilitysound.Play();
         playerPV = playerPV + 20f;
         donutEnable = false;
+        OnUpdateHealth?.Invoke();
     }
     
     void Explosion()
     {
+        explosionsound.Play();
         Instantiate(BulletExplosionPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         sausaceEnable = false;
     }
     
     void FreezeEnemy()
     {
+        abilitysound.Play();
         Instantiate(BulletFreezePrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         iceCreamEnable = false;
     }
