@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource explosionsound;
     public AudioSource damagesound;
 
-    public float playerPV;
+    public float playerPV = 100;
     public float maxPlayerPV = 100f;
     public float moveSpeed = 2.5f;
     public float playerDamage; 
@@ -35,7 +36,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator;
     private NavMeshAgent Agent;
     private Vector3 moveDestination;
-    public EnemyController _enemyController;
+  private EnemyController _enemyController;
+    public Timer timer;
 
     private bool donutEnable = false;
     private bool bananaEnable = false;
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
    public GameUI _gameUI; 
     
+    
     public delegate void PlayerEvents();
 
     public static event PlayerEvents OnUpdateHealth;
@@ -66,6 +69,8 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
         OnUpdateHealth?.Invoke();
+        
+        
     }
     void Update()
     {
@@ -73,7 +78,6 @@ public class PlayerController : MonoBehaviour
         _gameUI.icecreamBar.fillAmount = iceCreamValue / iceCreaMaxValue;
         _gameUI.donutBar.fillAmount = donutValue / donutMaxValue;
         _gameUI.saucisseBar.fillAmount = sausaceValue / sausaceMaxValue;
-        
         
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
       Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -145,6 +149,7 @@ public class PlayerController : MonoBehaviour
       {
           FreezeEnemy();
       }
+    
       
     }
     IEnumerator SpeedUP()
@@ -196,17 +201,18 @@ public class PlayerController : MonoBehaviour
         OnUpdateHealth?.Invoke();
         if (playerPV <= 0)
         { 
-            _enemyController._animator.SetInteger("SlimAnimation",3);
+            //_enemyController._animator.SetInteger("SlimAnimation",3);
           //  _animator.SetInteger("AnimationPar", 2);
             Destruction();
         }
     }
     protected virtual void Destruction()
     {
-        mainCamera.transform.SetParent(null);
+        //mainCamera.transform.SetParent(null);
      
        //  deathsound.Play();
-       Destroy(gameObject,0f);
+       //Destroy(gameObject,0f);
+       SceneManager.LoadScene("GameOver");
     }
 
     void  Health()

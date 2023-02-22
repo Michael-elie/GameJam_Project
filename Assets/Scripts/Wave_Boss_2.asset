@@ -15,4 +15,4 @@ MonoBehaviour:
   <EnemiesInWave>k__BackingField:
   - {fileID: 3234231079797663788, guid: 9dcbab553712ef746b166e598643b386, type: 3}
   <TimeBeforeThisWave>k__BackingField: 30
-  <NumberToSpawn>k__BackingField: 1
+  <NumberToSpawn>k__BackingField: 2

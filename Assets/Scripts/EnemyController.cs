@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 knockBackdistance;
    // public SpawnEnemy SpawnEnemy;
     public Animator _animator;
-    
+    private PlayerController _playerController;
 
     void Start()
     {
@@ -30,10 +30,17 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        enemy.SetDestination(Playertarget.transform.position);
        
+        
+            folowPlayer();
+        
+        
     }
-    
+
+    public void folowPlayer()
+    {
+        enemy.SetDestination(Playertarget.transform.position);
+    }
 
     public void Damage(float damage)
     {
