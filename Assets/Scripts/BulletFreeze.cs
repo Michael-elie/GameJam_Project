@@ -9,10 +9,13 @@ public class BulletFreeze : MonoBehaviour
     [SerializeField] private float BulletSpeed = 10f;
     public GameObject Freeezefx;
     public float FreezeForce, radius;
+    private AudioSource freezesound;
     private Vector3 fxposition;
     void Start()
     {
+       freezesound = GameObject.Find("Freezesound").GetComponent<AudioSource>();
         GetComponent<Rigidbody>().velocity = transform.forward * BulletSpeed;
+       
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -23,6 +26,7 @@ public class BulletFreeze : MonoBehaviour
             collision.gameObject.GetComponent<NavMeshAgent>().speed = 0.1f;
             fxposition = collision.gameObject.transform.position;
             Instantiate(Freeezefx, fxposition, Quaternion.identity);
+            freezesound.Play();
         }
         Destroy(gameObject);
     }

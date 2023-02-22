@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private bool donutEnable = false;
     private bool bananaEnable = false;
     private bool sausaceEnable = false;
-    private bool iceCreamEnable = false;
+    private bool iceCreamEnable = true;
     [SerializeField] private bool boostSpeed = false;
 
     
@@ -54,7 +55,6 @@ public class PlayerController : MonoBehaviour
         Agent = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
-        
         OnUpdateHealth?.Invoke();
     }
     void Update()
@@ -87,12 +87,7 @@ public class PlayerController : MonoBehaviour
       {
           gameObject.GetComponent<NavMeshAgent>().speed =  4f;
       }
-
       
-
-
-
-
 
       if (Input.GetKeyDown(KeyCode.Alpha1) && donutEnable == true )
       {
@@ -134,12 +129,13 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         
-        _animator.SetInteger ("AnimationPar", 1);
+        _animator.SetInteger("AnimationPar", 1);
         float horInput = Input.GetAxisRaw("Horizontal");
         float verInput = Input.GetAxisRaw("Vertical");
         Vector3 movement = new Vector3(horInput, 0f, verInput);
         moveDestination = transform.position + movement;
-        Agent.destination = moveDestination;
+        Debug.Log(moveDestination);
+        Agent.SetDestination(moveDestination);
     }
     
     
