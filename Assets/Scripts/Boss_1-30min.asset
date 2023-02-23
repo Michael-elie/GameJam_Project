@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Boss_1-30min
   m_EditorClassIdentifier: 
   enemyPv: 200
-  enemySpeed: 3.5
+  enemySpeed: 4.5
   enemyDamage: 25

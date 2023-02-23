@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Enemy_1min
   m_EditorClassIdentifier: 
   enemyPv: 125
-  enemySpeed: 3.9
+  enemySpeed: 4.9
   enemyDamage: 25

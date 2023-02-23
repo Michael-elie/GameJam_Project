@@ -100,7 +100,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 11
-        value: {x: -90, y: 0, z: 0}
+        value: {x: -90, y: 0, z: 0.015780449}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -190,15 +190,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 9.3
         value: {x: 0.002, y: 0.066, z: -0.02094581}
-        inSlope: {x: 0, y: 0, z: 0.012000001}
-        outSlope: {x: 0, y: 0, z: 0.012000001}
+        inSlope: {x: 0, y: 0, z: 0.011997605}
+        outSlope: {x: 0, y: 0, z: 0.011997605}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 11
-        value: {x: 0.002, y: 0.066, z: -0.007}
+        value: {x: 0.002, y: 0.066, z: -0.0070081865}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -244,7 +244,7 @@ AnimationClip:
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -533,15 +533,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 9.3
         value: -0.02094581
-        inSlope: 0.012000001
-        outSlope: 0.012000001
+        inSlope: 0.011997605
+        outSlope: 0.011997605
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 11
-        value: -0.007
+        value: -0.0070081865
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -841,7 +841,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 11
-        value: 0
+        value: 0.015780449
         inSlope: 0
         outSlope: 0
         tangentMode: 136
