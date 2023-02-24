@@ -6,8 +6,8 @@ public class PowerUp : MonoBehaviour
 {
     
     public SpawnPowerUp SpawnerScript;
-    private AudioSource powerupsound; 
-    
+    private AudioSource powerupsound;
+    public PlayerController playerController;
 
   
 
@@ -32,7 +32,6 @@ public class PowerUp : MonoBehaviour
             powerupsound.Play();
             OnTargetTouched?.Invoke(SpawnerScript.gameObject.name);
             Destroy(gameObject);
-            
         }  
     }
 }

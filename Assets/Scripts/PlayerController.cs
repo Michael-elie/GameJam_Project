@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
        
        firesound.Play();
         Instantiate(BulletPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.27f);
         IsAlreadyFiring = false;
     } 
     
@@ -252,8 +252,12 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("banane"))
         {
-            bananeValue = bananeValue + 1; 
-            _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue; 
+            if (bananeValue < bananeMaxValue)
+            {
+                bananeValue = bananeValue + 1; 
+                _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue;
+            }
+            
 
         }
         else if (other.gameObject.CompareTag("icecream"))

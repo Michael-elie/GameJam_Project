@@ -7,19 +7,10 @@ public class MainMenu : MonoBehaviour
 {
 
     [SerializeField] private Animator _animator;
-    private Scene _scene;
+   
     private void Start()
     {
-        _scene = SceneManager.GetActiveScene();
-        
-       /* if (_scene.name == "GameOver");
-        {
-            _animator.SetInteger("AnimationPar", 3);
-        }*/
-        if (_scene.name == "Game");
-        {
-            _animator.SetInteger("AnimationPar", 2);
-        }
+        _animator.SetInteger("AnimationPar", 2);
     }
 
     public void PlayGame()

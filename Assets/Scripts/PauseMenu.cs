@@ -8,7 +8,8 @@ public class PauseMenu : MonoBehaviour
 {
    
     public static bool GameIsPaused = false;
-    public GameObject pauseMenuUI; 
+    public GameObject pauseMenuUI;
+  //  public GameObject soundmanager; 
 
 
     private void Start()
@@ -21,10 +22,12 @@ public class PauseMenu : MonoBehaviour
         if (GameIsPaused == false && Input.GetKeyDown(KeyCode.Escape))
         {
             Stop();
+            //soundmanager.SetActive(false);
         }
         else if (GameIsPaused == true && Input.GetKeyDown(KeyCode.Escape))
         {
             Play();
+           // soundmanager.SetActive(true);
         }
         
     }
