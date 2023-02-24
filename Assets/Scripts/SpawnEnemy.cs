@@ -48,7 +48,7 @@ public class SpawnEnemy : MonoBehaviour
             int num2 = Random.Range(0, spawnpoints.Length);
  
          Instantiate(currentWave.EnemiesInWave[num], spawnpoints[num2].position, spawnpoints[num2].rotation);
-         
+
 
         }
     }

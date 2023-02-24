@@ -40,14 +40,14 @@ public class PlayerController : MonoBehaviour
     private EnemyController _enemyController;
     public Timer timer;
 
-    private bool donutEnable = false;
-    private bool bananaEnable = false;
-    private bool sausaceEnable = false;
-    private bool iceCreamEnable = false;
+   private bool donutEnable = false;
+   private bool bananaEnable = false;
+   private bool sausaceEnable = false;
+   private bool iceCreamEnable = false;
 
     [SerializeField] private GameObject donutready;
-    [SerializeField] private GameObject bananeready;
-    [SerializeField] private GameObject saucisseready;
+   [SerializeField] private GameObject bananeready;
+   [SerializeField] private GameObject saucisseready;
     [SerializeField] private GameObject icecreamready;
     
     public float donutValue = 0;
@@ -99,25 +99,25 @@ public class PlayerController : MonoBehaviour
       Move();
       
       
-      if (donutValue == donutMaxValue)
+      if (donutValue >= donutMaxValue)
       {
           donutEnable = true;
           donutready.SetActive(true);
       }
-      else if (sausaceValue == sausaceMaxValue)
+      else if (sausaceValue >= sausaceMaxValue)
       {
           sausaceEnable = true;
-          saucisseready.SetActive(true);
+        saucisseready.SetActive(true);
       }
-      else if (bananeValue == bananeMaxValue)
+      else if (bananeValue >= bananeMaxValue)
       {
           bananaEnable = true;
           bananeready.SetActive(true);
       }
-      else if (iceCreamValue == iceCreaMaxValue)
+      else if (iceCreamValue >= iceCreaMaxValue)
       {
           iceCreamEnable = true;
-          icecreamready.SetActive(true);
+         icecreamready.SetActive(true);
       }
 
       if ( moveDestination == transform.position )
@@ -169,8 +169,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(3f);
             boostSpeed = false;
         }
-       
-      
     }
     private void Move()
     {
@@ -228,7 +226,7 @@ public class PlayerController : MonoBehaviour
         donutValue = 0;
         OnUpdateHealth?.Invoke();
         _gameUI.donutBar.fillAmount = donutValue / donutMaxValue;
-        donutready.SetActive(false);
+       donutready.SetActive(false);
     }
     
     void Explosion()
@@ -237,7 +235,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(BulletExplosionPrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         sausaceEnable = false;
         sausaceValue = 0;
-        saucisseready.SetActive(false);
+     saucisseready.SetActive(false);
         _gameUI.saucisseBar.fillAmount = sausaceValue / sausaceMaxValue;
     }
     void FreezeEnemy()
@@ -246,7 +244,7 @@ public class PlayerController : MonoBehaviour
         Instantiate(BulletFreezePrefab, BulletSpawnPosition.position, BulletSpawnPosition.rotation);
         iceCreamEnable = false;
         iceCreamValue = 0;
-        icecreamready.SetActive(false);
+       icecreamready.SetActive(false);
         _gameUI.icecreamBar.fillAmount = iceCreamValue / iceCreaMaxValue;
     }
     
