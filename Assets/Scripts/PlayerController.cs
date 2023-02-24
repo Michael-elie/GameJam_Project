@@ -161,14 +161,16 @@ public class PlayerController : MonoBehaviour
         if (boostSpeed == true)
         {
             abilitysound.Play();
+            bananeValue = 0;
             gameObject.GetComponent<NavMeshAgent>().speed =   gameObject.GetComponent<NavMeshAgent>().speed + 1f;
+            bananeready.SetActive(false);
+            _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue; 
+            bananaEnable = false;
             yield return new WaitForSeconds(3f);
             boostSpeed = false;
-            bananeValue = 0;
         }
-        bananaEnable = false;
-        bananeready.SetActive(false);
-        _gameUI.bananeBar.fillAmount = bananeValue / bananeMaxValue; 
+       
+      
     }
     private void Move()
     {

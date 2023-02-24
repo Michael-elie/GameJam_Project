@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
         if (GameIsPaused == false && Input.GetKeyDown(KeyCode.Escape))
         {
             Stop();
-            //soundmanager.SetActive(false);
+            // soundmanager.SetActive(false);
         }
         else if (GameIsPaused == true && Input.GetKeyDown(KeyCode.Escape))
         {
