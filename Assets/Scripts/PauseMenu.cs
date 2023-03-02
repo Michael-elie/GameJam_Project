@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,8 +12,13 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
   //public GameObject soundmanager; 
- 
+  //public AudioMixer musicMixer; 
 
+  public static float musicVolume { get; private set; }
+  public static float soundEffectsVolume { get; private set; }
+
+  [SerializeField] private TextMeshProUGUI musicSliderText;
+  [SerializeField] private TextMeshProUGUI soundEffectsSliderText;
 
     private void Start()
     {
@@ -32,6 +39,12 @@ public class PauseMenu : MonoBehaviour
         }
         
     }
+
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
+   
     private bool IsMouseOverUI()
     {
         return EventSystem.current.IsPointerOverGameObject();
@@ -80,7 +93,21 @@ public class PauseMenu : MonoBehaviour
      Application.Quit();
     }
     
-    
+    public void OnMusicSliderValueChange(float value)
+    {
+        musicVolume = value;
+        
+        musicSliderText.text = ((int)(value * 100)).ToString();
+        AudioManager.Instance.UpdateMixerVolume();
+    }
+
+    public void OnSoundEffectsSliderValueChange(float value)
+    {
+        soundEffectsVolume = value;
+
+        soundEffectsSliderText.text = ((int)(value * 100)).ToString();
+        AudioManager.Instance.UpdateMixerVolume();
+    }
     
     
     
