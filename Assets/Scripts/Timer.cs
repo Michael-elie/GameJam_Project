@@ -1,11 +1,13 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 public class Timer : MonoBehaviour
 {
    
     public float timeValue = 90f;
     [SerializeField] private TMP_Text TimerText;
-    
+    public PlayerController _playerController; 
     
     
     void Update()
@@ -23,7 +25,13 @@ public class Timer : MonoBehaviour
         }
 
         DisplayTime(timeValue);
-        
+
+
+
+        if (timeValue == 0 && _playerController.playerPV > 0 )
+        {
+            SceneManager.LoadScene("Win");
+        }
         
     }
     
