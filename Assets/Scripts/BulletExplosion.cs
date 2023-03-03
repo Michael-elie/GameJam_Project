@@ -20,7 +20,7 @@ public class BulletExplosion : MonoBehaviour
         if (collision.gameObject.GetComponentInParent<EnemyController>() != null)
         {
            KnockBack();
-           collision.gameObject.GetComponentInParent<EnemyController>().Damage(PlayerController.playerDamage + 200f);
+           collision.gameObject.GetComponentInParent<EnemyController>().Damage(PlayerController.playerDamage + 500f);
            
         }
         Destroy(gameObject,0.001f);
