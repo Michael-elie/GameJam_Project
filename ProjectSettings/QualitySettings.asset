@@ -149,9 +149,7 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
-    excludedTargetPlatforms:
-    - Server
-    - Standalone
+    excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra
     pixelLightCount: 4
@@ -187,23 +185,8 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
-    excludedTargetPlatforms:
-    - Server
-    - Standalone
+    excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
-    Android: 1
-    GameCoreScarlett: 4
-    GameCoreXboxOne: 4
-    Lumin: 4
-    Nintendo 3DS: 4
-    Nintendo Switch: 4
-    PS4: 4
-    PS5: 4
     Server: 0
-    Stadia: 4
-    Standalone: 4
-    WebGL: 2
-    Windows Store Apps: 4
-    XboxOne: 4
-    iPhone: 1
-    tvOS: 1
+    Standalone: 0
+    WebGL: 0
